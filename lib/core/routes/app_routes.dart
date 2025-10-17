@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 
+import '../../features/splash/presentation/pages/view.dart';
 import 'routes.dart';
 
 class AppRoutes {
@@ -8,7 +9,7 @@ class AppRoutes {
   String initial = NamedRoutes.i.splash;
   AppRoutes._internal();
   Map<String, Widget Function(BuildContext c)> appRoutes = {
-    // NamedRoutes.i.splash: (c) => const SplashView(),
+    NamedRoutes.i.splash: (c) => const SplashView(),
     // NamedRoutes.i.login: (c) => const SignInView(),
     // NamedRoutes.i.layout: (c) => const LayoutView(),
     // NamedRoutes.i.home: (c) => HomeView(),
