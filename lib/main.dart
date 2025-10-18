@@ -19,7 +19,6 @@ import 'core/utils/phoneix.dart';
 import 'core/utils/unfucs.dart';
 import 'di/service_locator.dart' as di;
 
-
 final logger = LoggerDebug(headColor: LogColors.green);
 final internetChecker = InternetChecker();
 
@@ -28,13 +27,13 @@ Future<void> main() async {
   HttpOverrides.global = MyHttpOverrides();
 
   logger.green(
-      " اللهم صلي وسلم وبارك على سيدنا محمد وعلى آله وصحبه   💕💕💕💕💕💕💕💕💕💕");
+    " اللهم صلي وسلم وبارك على سيدنا محمد وعلى آله وصحبه   💕💕💕💕💕💕💕💕💕💕",
+  );
   preferences = await SharedPreferences.getInstance();
 
   await _init();
   await di.initGitIt();
   await EasyLocalization.ensureInitialized();
-
 
   await ScreenUtil.ensureScreenSize();
 
@@ -70,52 +69,56 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-        designSize: const Size(375, 812),
-        minTextAdapt: true,
-        splitScreenMode: true,
-        builder: (context, child) {
-          return MaterialApp(
-            title: 'Alicom',
-            initialRoute: AppRoutes.init.initial,
-            routes: AppRoutes.init.appRoutes,
-            navigatorKey: navigatorKey,
-            debugShowCheckedModeBanner: false,
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
-            // theme: AppThemes.light, //Using edited theme
-            // onGenerateRoute: AppRoutes.onGenerateRoute, //using edited route
-            scrollBehavior: MaterialScrollBehavior().copyWith(dragDevices: {
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MaterialApp(
+          title: 'Alicom',
+          initialRoute: AppRoutes.init.initial,
+          routes: AppRoutes.init.appRoutes,
+          navigatorKey: navigatorKey,
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
+          // theme: AppThemes.light, //Using edited theme
+          // onGenerateRoute: AppRoutes.onGenerateRoute, //using edited route
+          scrollBehavior: MaterialScrollBehavior().copyWith(
+            dragDevices: {
               PointerDeviceKind.mouse,
               PointerDeviceKind.touch,
               PointerDeviceKind.stylus,
-              PointerDeviceKind.unknown
-            }),
-            localeResolutionCallback: (deviceLocale, supportedLocales) {
-              for (var locale in supportedLocales) {
-                if (deviceLocale != null &&
-                    deviceLocale.languageCode == locale.languageCode) {
-                  return deviceLocale;
-                }
+              PointerDeviceKind.unknown,
+            },
+          ),
+          localeResolutionCallback: (deviceLocale, supportedLocales) {
+            for (var locale in supportedLocales) {
+              if (deviceLocale != null &&
+                  deviceLocale.languageCode == locale.languageCode) {
+                return deviceLocale;
               }
-              return supportedLocales.first;
-            },
-            builder: (context, child) {
-              ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
-                return Scaffold(
-                    appBar:
-                    AppBar(elevation: 0, backgroundColor: Colors.white));
-              };
-              return Phoenix(
-                child: MediaQuery(
-                  data: MediaQuery.of(context).copyWith(
-                      textScaler: TextScaler.linear(1.sp > 1.2 ? 1.2 : 1.sp)),
-                  child: Unfocus(child: child ?? const SizedBox.shrink()),
-                ),
+            }
+            return supportedLocales.first;
+          },
+          builder: (context, child) {
+            ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
+              return Scaffold(
+                appBar: AppBar(elevation: 0, backgroundColor: Colors.white),
               );
-            },
-          );
-        });
+            };
+            return Phoenix(
+              child: MediaQuery(
+                data: MediaQuery.of(context).copyWith(
+                  textScaler: TextScaler.linear(1.sp > 1.2 ? 1.2 : 1.sp),
+                ),
+                child: Unfocus(child: child ?? const SizedBox.shrink()),
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 }
 
