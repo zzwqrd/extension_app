@@ -16,9 +16,11 @@ class SplashView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          'Welcome To Back'.styled(context.titleMedium.bold.xl2.copyWith(color: context.success)),
+          'Welcome To Back'.styled(
+            context.titleMedium.bold.xl2.copyWith(color: context.success),
+          ),
           12.h,
-          MyAssets.icons.icon.image(width: 100).roundedFull,
+          MyAssets.icons.logo.svg(width: 100).roundedFull,
         ],
       ).center,
     );
