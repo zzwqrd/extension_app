@@ -6,8 +6,8 @@
     {
       "id": "qbuDkdR2Y7QlZ228vhDNi",
       "type": "rectangle",
-      "x": 262.1171875,
-      "y": -102.5703125,
+      "x": 187.1328125,
+      "y": -263.3984375,
       "width": 118.25390624999999,
       "height": 52.76171875,
       "angle": 0,
@@ -25,8 +25,8 @@
         "type": 3
       },
       "seed": 735557400,
-      "version": 242,
-      "versionNonce": 1690292760,
+      "version": 277,
+      "versionNonce": 1005994008,
       "isDeleted": false,
       "boundElements": [
         {
@@ -34,15 +34,15 @@
           "id": "VTLQcaWgIaMUB67-6WUrP"
         }
       ],
-      "updated": 1761581748133,
+      "updated": 1761581860591,
       "link": null,
       "locked": false
     },
     {
       "id": "VTLQcaWgIaMUB67-6WUrP",
       "type": "text",
-      "x": 303.9541549682617,
-      "y": -87.689453125,
+      "x": 228.96977996826172,
+      "y": -248.517578125,
       "width": 34.57997131347656,
       "height": 23,
       "angle": 0,
@@ -58,11 +58,11 @@
       "index": "a1",
       "roundness": null,
       "seed": 1758482456,
-      "version": 199,
-      "versionNonce": 1691728664,
+      "version": 234,
+      "versionNonce": 1751547160,
       "isDeleted": false,
       "boundElements": null,
-      "updated": 1761581762350,
+      "updated": 1761581860591,
       "link": null,
       "locked": false,
       "text": "bloc",
