@@ -3,7 +3,6 @@ import 'package:extension_app/core/services/dio_services.dart';
 
 import '../../../../../core/services/helper_respons.dart';
 import '../../../../../core/utils/constant.dart';
-import '../../../../../core/utils/enums.dart';
 import '../models/model.dart';
 import '../models/model_e.dart';
 
@@ -11,26 +10,15 @@ class LoginDataSourceImpl {
   Future<Either<HelperResponse, GetDataUserModel>> login(
     LoginModel loginModel,
   ) async {
-    try {
-      final response = await DioServices().post(
-        AppConstants.login,
-        data: loginModel.toJson(),
-      );
+    final response = await DioServices().post(
+      AppConstants.login,
+      data: loginModel.toJson(),
+    );
 
-      if (response.statusCode == 200) {
-        return Right(GetDataUserModel.fromJson(response.data));
-      } else {
-        return Left(response.data['message']);
-      }
-    } catch (e) {
-      return Left(
-        HelperResponse(
-          statusCode: 500,
-          message: e.toString(),
-          state: ResponseState.unknownError,
-          success: false,
-        ),
-      );
+    if (response.statusCode == 200) {
+      return Right(GetDataUserModel.fromJson(response.data));
+    } else {
+      return Left(response);
     }
   }
 }

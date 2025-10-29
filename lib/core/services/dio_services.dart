@@ -654,7 +654,7 @@ class DioServices {
       }
     } else if (data is Map<String, dynamic>) {
       return data['message'] ??
-          data['error'] ??
+          data['message'] ??
           data['errors']?.toString() ??
           'unknown_error'.tr();
     }
