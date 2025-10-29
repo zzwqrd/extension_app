@@ -18,7 +18,9 @@ import 'model.dart';
 class DioServices {
   final Dio _dio = Dio();
   final _logger = LoggerDebug(
-      headColor: LogColors.red, constTitle: "DioHelper Gate Logger");
+    headColor: LogColors.red,
+    constTitle: "DioHelper Gate Logger",
+  );
 
   DioServices._internal() {
     init();
@@ -43,7 +45,8 @@ class DioServices {
       if (latency > 1000) {
         // Threshold for poor connection
         _logger.yellow(
-            "Poor internet connection detected (latency: ${latency}ms)");
+          "Poor internet connection detected (latency: ${latency}ms)",
+        );
         return HelperResponse<T>.poorConnection(
           message: 'poor_connection_check_the_quality_of_the_internet'.tr(),
         );
@@ -74,18 +77,16 @@ class DioServices {
   late StreamSubscription<InternetStatus> internetSubscription;
 
   void startInternetMonitoring() {
-    internetSubscription = InternetConnection().onStatusChange.listen(
-      (status) {
-        final isConnected = status == InternetStatus.connected;
-        _logger.green("Internet connectivity changed: $status");
+    internetSubscription = InternetConnection().onStatusChange.listen((status) {
+      final isConnected = status == InternetStatus.connected;
+      _logger.green("Internet connectivity changed: $status");
 
-        if (!isConnected) {
-          // pushAndRemoveUntil(NamedRoutes.i.internet);
-        } else {
-          // pushAndRemoveUntil(NamedRoutes.i.splash);
-        }
-      },
-    );
+      if (!isConnected) {
+        // pushAndRemoveUntil(NamedRoutes.i.internet);
+      } else {
+        // pushAndRemoveUntil(NamedRoutes.i.splash);
+      }
+    });
   }
 
   void stopInternetMonitoring() {
@@ -101,8 +102,8 @@ class DioServices {
         client.connectionTimeout = const Duration(seconds: 30);
         client.idleTimeout = const Duration(seconds: 30);
         client.maxConnectionsPerHost = 10;
-        client.badCertificateCallback =
-            (cert, host, port) => true; // For debug only
+        client.badCertificateCallback = (cert, host, port) =>
+            true; // For debug only
         return client;
       };
 
@@ -143,10 +144,12 @@ class DioServices {
     return InterceptorsWrapper(
       onRequest: (options, handler) async {
         // Clean up headers and parameters
-        options.headers
-            .removeWhere((k, v) => v == null || v.toString().isEmpty);
-        options.queryParameters
-            .removeWhere((k, v) => v == null || v.toString().isEmpty);
+        options.headers.removeWhere(
+          (k, v) => v == null || v.toString().isEmpty,
+        );
+        options.queryParameters.removeWhere(
+          (k, v) => v == null || v.toString().isEmpty,
+        );
 
         // Add auth token if available
         if (UserModel.instance.isAuth) {
@@ -201,7 +204,8 @@ class DioServices {
       },
       onResponse: (response, handler) {
         _logger.green(
-            '✅ Response [${response.statusCode}] ${response.requestOptions.uri}');
+          '✅ Response [${response.statusCode}] ${response.requestOptions.uri}',
+        );
         _logger.green('Data: ${_formatResponseData(response.data)}');
         return handler.next(response);
       },
@@ -357,8 +361,9 @@ class DioServices {
             "Bearer ${UserModel.instance.data!.access!.token}";
       }
 
-      final requestData =
-          isFormData && formData != null ? FormData.fromMap(formData) : data;
+      final requestData = isFormData && formData != null
+          ? FormData.fromMap(formData)
+          : data;
 
       final response = await _dio.post(
         path,
@@ -606,14 +611,10 @@ class DioServices {
           message: 'session_expired_please_login_again'.tr(),
         );
       } else if (response.statusCode == 403) {
-        return HelperResponse<T>.forbidden(
-          message: 'access_denied'.tr(),
-        );
+        return HelperResponse<T>.forbidden(message: 'access_denied'.tr());
       } else if (response.statusCode == 404) {
         // pushAndRemoveUntil(NamedRoutes.i.error);
-        return HelperResponse<T>.notFound(
-          message: 'resource_not_found'.tr(),
-        );
+        return HelperResponse<T>.notFound(message: 'resource_not_found'.tr());
       } else if (response.statusCode == 422) {
         return HelperResponse<T>.validationError(
           message: _extractValidationErrors(response.data),
@@ -665,8 +666,9 @@ class DioServices {
   String _extractValidationErrors(dynamic data) {
     if (data is Map<String, dynamic>) {
       if (data['errors'] is Map) {
-        final errors =
-            (data['errors'] as Map).values.expand((e) => e is List ? e : [e]);
+        final errors = (data['errors'] as Map).values.expand(
+          (e) => e is List ? e : [e],
+        );
         return errors.join(', ');
       }
       return data['message'] ?? 'validation_failed'.tr();
@@ -695,9 +697,7 @@ class DioServices {
           );
 
         case DioExceptionType.cancel:
-          return HelperResponse<T>.cancelled(
-            message: 'request_cancelled'.tr(),
-          );
+          return HelperResponse<T>.cancelled(message: 'request_cancelled'.tr());
 
         case DioExceptionType.connectionError:
           return HelperResponse<T>.noInternet(
