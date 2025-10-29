@@ -20,7 +20,7 @@ class LoginDataSourceImpl {
       if (response.statusCode == 200) {
         return Right(GetDataUserModel.fromJson(response.data));
       } else {
-        return Left(response);
+        return Left(response.data['message']);
       }
     } catch (e) {
       return Left(
