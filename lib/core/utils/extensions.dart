@@ -45,9 +45,9 @@ extension ExtensionContext on BuildContext {
   String get currentRoute => ModalRoute.of(this)?.settings.name ?? "";
 
   BoxDecoration get primaryDecoration => BoxDecoration(
-        borderRadius: BorderRadius.circular(14.r),
-        color: primaryContainer,
-      );
+    borderRadius: BorderRadius.circular(14.r),
+    color: primaryContainer,
+  );
 
   Map<dynamic, dynamic> get arg =>
       (ModalRoute.of(this)?.settings.arguments ?? {}) as Map<dynamic, dynamic>;
@@ -70,21 +70,26 @@ extension StringExtention on String {
         val += (hexDigit - 87) * (1 << (4 * (len - 1 - i)));
       } else {
         throw const FormatException(
-            "An error occurred when converting a color");
+          "An error occurred when converting a color",
+        );
       }
     }
     return Color(val);
   }
 
   bool get isImage {
-    final RegExp imageRegex =
-        RegExp(r'\.(jpg|jpeg|png|gif|bmp|webp)$', caseSensitive: false);
+    final RegExp imageRegex = RegExp(
+      r'\.(jpg|jpeg|png|gif|bmp|webp)$',
+      caseSensitive: false,
+    );
     return imageRegex.hasMatch(this);
   }
 
   bool get isVideo {
-    final RegExp videoRegex =
-        RegExp(r'\.(mp4|mov|wmv|avi|mkv|flv|webm)$', caseSensitive: false);
+    final RegExp videoRegex = RegExp(
+      r'\.(mp4|mov|wmv|avi|mkv|flv|webm)$',
+      caseSensitive: false,
+    );
     return videoRegex.hasMatch(this);
   }
 

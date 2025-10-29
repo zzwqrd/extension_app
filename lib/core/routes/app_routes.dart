@@ -1,5 +1,5 @@
+import 'package:extension_app/features/auth/login/presentation/pages/view.dart';
 import 'package:flutter/material.dart';
-
 
 import '../../features/splash/presentation/pages/view.dart';
 import 'routes.dart';
@@ -10,7 +10,7 @@ class AppRoutes {
   AppRoutes._internal();
   Map<String, Widget Function(BuildContext c)> appRoutes = {
     NamedRoutes.i.splash: (c) => const SplashView(),
-    // NamedRoutes.i.login: (c) => const SignInView(),
+    NamedRoutes.i.login: (c) => const LoginView(),
     // NamedRoutes.i.layout: (c) => const LayoutView(),
     // NamedRoutes.i.home: (c) => HomeView(),
     // NamedRoutes.i.error: (context) => const ErrorView(),

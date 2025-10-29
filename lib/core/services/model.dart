@@ -6,10 +6,7 @@ import '../../../../main.dart';
 
 class UserModel extends Equatable {
   // Private constructor for singleton
-  const UserModel._({
-    this.message = "",
-    this.data,
-  });
+  const UserModel._({this.message = "", this.data});
 
   // Singleton instance
   static UserModel instance = const UserModel._();
@@ -26,10 +23,7 @@ class UserModel extends Equatable {
   final Data? data;
 
   // Convert to JSON
-  Map<String, dynamic> toJson() => {
-        "message": message,
-        "data": data?.toJson(),
-      };
+  Map<String, dynamic> toJson() => {"message": message, "data": data?.toJson()};
 
   // Authentication check
   bool get isAuth => data?.access?.token.isNotEmpty ?? false;
@@ -73,10 +67,7 @@ class UserModel extends Equatable {
 }
 
 class Data extends Equatable {
-  const Data({
-    required this.user,
-    required this.access,
-  });
+  const Data({required this.user, required this.access});
 
   final User? user;
   final Access? access;
@@ -89,15 +80,12 @@ class Data extends Equatable {
   }
 
   Map<String, dynamic> toJson() => {
-        "user": user?.toJson(),
-        "access": access?.toJson(),
-      };
+    "user": user?.toJson(),
+    "access": access?.toJson(),
+  };
 
   @override
-  List<Object?> get props => [
-        user,
-        access,
-      ];
+  List<Object?> get props => [user, access];
 }
 
 class Access extends Equatable {
@@ -120,17 +108,13 @@ class Access extends Equatable {
   }
 
   Map<String, dynamic> toJson() => {
-        "auth_type": authType,
-        "token": token,
-        "expires_at": expiresAt?.toIso8601String(),
-      };
+    "auth_type": authType,
+    "token": token,
+    "expires_at": expiresAt?.toIso8601String(),
+  };
 
   @override
-  List<Object?> get props => [
-        authType,
-        token,
-        expiresAt,
-      ];
+  List<Object?> get props => [authType, token, expiresAt];
 }
 
 class User extends Equatable {
@@ -180,33 +164,33 @@ class User extends Equatable {
   }
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "phone": phone,
-        "phone_verified": phoneVerified,
-        "email": email,
-        "email_verified": emailVerified,
-        "is_active": isActive,
-        "profile_photo": profilePhoto,
-        "gender": gender,
-        "date_of_birth": dateOfBirth,
-        "country": country,
-        "phone_code": phoneCode,
-      };
+    "id": id,
+    "name": name,
+    "phone": phone,
+    "phone_verified": phoneVerified,
+    "email": email,
+    "email_verified": emailVerified,
+    "is_active": isActive,
+    "profile_photo": profilePhoto,
+    "gender": gender,
+    "date_of_birth": dateOfBirth,
+    "country": country,
+    "phone_code": phoneCode,
+  };
 
   @override
   List<Object?> get props => [
-        id,
-        name,
-        phone,
-        phoneVerified,
-        email,
-        emailVerified,
-        isActive,
-        profilePhoto,
-        gender,
-        dateOfBirth,
-        country,
-        phoneCode,
-      ];
+    id,
+    name,
+    phone,
+    phoneVerified,
+    email,
+    emailVerified,
+    isActive,
+    profilePhoto,
+    gender,
+    dateOfBirth,
+    country,
+    phoneCode,
+  ];
 }

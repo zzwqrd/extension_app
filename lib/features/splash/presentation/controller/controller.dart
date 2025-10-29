@@ -23,6 +23,6 @@ class SplashCubit extends Cubit<SplashState> {
   }
 
   Future<String> _determineNextRoute() async {
-    return NamedRoutes.i.home;
+    return NamedRoutes.i.login;
   }
 }

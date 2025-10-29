@@ -10,8 +10,11 @@ import '../routes/app_routes_fun.dart';
 enum MessageTypeTost { success, fail, warning }
 
 class FlashHelper {
-  static Future<void> showToast(String msg,
-      {int duration = 2, MessageTypeTost type = MessageTypeTost.fail}) async {
+  static Future<void> showToast(
+    String msg, {
+    int duration = 2,
+    MessageTypeTost type = MessageTypeTost.fail,
+  }) async {
     if (msg.isEmpty) return;
     return showFlash(
       context: navigatorKey.currentContext!,
@@ -24,15 +27,20 @@ class FlashHelper {
           content: Container(
             padding: EdgeInsets.fromLTRB(16.w, 10.h, 16.w, 10.h),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(9.r),
-                color: _getBgColor(type)),
+              borderRadius: BorderRadius.circular(9.r),
+              color: _getBgColor(type),
+            ),
             child: Row(
               children: [
                 Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 8.w, vertical: 11.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 8.w,
+                    vertical: 11.h,
+                  ),
                   decoration: const BoxDecoration(
-                      color: Colors.white, shape: BoxShape.circle),
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
                   child: Center(
                     child: CustomImage(
                       MyAssets.icons.logo.path,
@@ -52,7 +60,9 @@ class FlashHelper {
                     textAlign: TextAlign.start,
                     softWrap: true,
                     style: context.regularText.copyWith(
-                        fontSize: 16, color: context.primaryColorLight),
+                      fontSize: 16,
+                      color: context.primaryColorLight,
+                    ),
                   ),
                 ),
                 Container(
@@ -60,7 +70,9 @@ class FlashHelper {
                   width: 24.h,
                   padding: EdgeInsets.all(5.r),
                   decoration: const BoxDecoration(
-                      color: Colors.white, shape: BoxShape.circle),
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
                   child: CustomImage(
                     _getToastIcon(type),
                     height: 19.h,

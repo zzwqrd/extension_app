@@ -10,6 +10,7 @@ import 'package:extension_app/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/routes/routes.dart';
 import '../controller/state.dart';
 
 class SplashView extends StatelessWidget {
@@ -29,8 +30,8 @@ class SplashView extends StatelessWidget {
         listener: (context, state) {
           if (state.status == SplashStatus.ready) {
             log("splash ready -> ${state.nextRoute}");
-            // final next = state.nextRoute ?? NamedRoutes.i.home;
-            // Navigator.of(context).pushReplacementNamed(next);
+            final next = state.nextRoute ?? NamedRoutes.i.login;
+            Navigator.of(context).pushReplacementNamed(next);
           }
         },
         child: Scaffold(
