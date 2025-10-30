@@ -11,7 +11,7 @@ class LoginCubit extends Cubit<LoginState> {
 
   final LoginUsecase _loginUseCase = LoginUseCaseImpl();
 
-  final loginModel = LoginModel(email: "user@alicom.com", password: "secretyy");
+  final loginModel = LoginModel(email: "user@alicom.com", password: "secret");
 
   Future<void> login() async {
     emit(state.copyWith(requestState: RequestState.loading));
