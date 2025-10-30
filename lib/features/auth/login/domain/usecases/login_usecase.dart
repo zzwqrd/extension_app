@@ -5,11 +5,11 @@ import '../../data/models/model.dart';
 import '../../data/models/model_e.dart';
 import '../../data/repositories/repository.dart';
 
-abstract class LoginUseCaseImpl {
+abstract class LoginUsecase {
   Future<Either<HelperResponse, GetDataUserModel>> call(LoginModel loginModel);
 }
 
-class LoginUsecase implements LoginUseCaseImpl {
+class LoginUseCaseImpl implements LoginUsecase {
   final loginRepository = LoginRepositoryImpl();
 
   @override

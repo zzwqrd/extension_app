@@ -9,7 +9,8 @@ import 'state.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginState());
 
-  final _loginUseCase = LoginUsecase();
+  final LoginUsecase _loginUseCase = LoginUseCaseImpl();
+
   final loginModel = LoginModel(email: "user@alicom.com", password: "secretyy");
 
   Future<void> login() async {
