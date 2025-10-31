@@ -36,7 +36,7 @@ class LoginView extends StatelessWidget {
             // before:
             // Flexible(child: Center(child: Text('Login View'))),
             // after:
-            'Login View'.h1.center.pb8,
+            "welcome back".h3.center.pb3,
             // before:
             // TextField(
             //   decoration: InputDecoration(
