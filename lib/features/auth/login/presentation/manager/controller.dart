@@ -1,4 +1,5 @@
 import 'package:extension_app/core/utils/flash_helper.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/utils/enums.dart';
@@ -10,10 +11,19 @@ class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginState());
 
   final LoginUsecase _loginUseCase = LoginUseCaseImpl();
+  final formKey = GlobalKey<FormState>();
 
-  final loginModel = LoginModel(email: "user@alicom.com", password: "secret");
+  LoginModel loginModel = LoginModel(
+    email: "user@alicom.com".trim(),
+    password: "secret".trim(),
+  );
 
   Future<void> login() async {
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+    formKey.currentState?.save();
+
     emit(state.copyWith(requestState: RequestState.loading));
 
     final result = await _loginUseCase(loginModel);
