@@ -11,5 +11,5 @@ Future<void> initGitIt() async {
     sl.registerFactory<SplashCubit>(() => SplashCubit());
   }
 
-  sl.registerLazySingleton<LoginCubit>(() => LoginCubit());
+  sl.registerFactory<LoginCubit>(() => LoginCubit());
 }

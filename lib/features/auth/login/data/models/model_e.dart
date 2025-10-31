@@ -23,7 +23,6 @@ class Datum extends Model {
 }
 
 class User1 extends Model {
-  @override
   late String name;
   late String phone;
   late bool phoneVerified;
