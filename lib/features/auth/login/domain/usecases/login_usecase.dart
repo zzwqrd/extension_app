@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 import '../../../../../core/services/helper_respons.dart';
 import '../../data/models/model.dart';
 import '../../data/models/model_e.dart';
-import '../../data/repositories/repository.dart';
+import '../../data/repositories/repository_impl.dart';
 
 abstract class LoginUsecase {
   Future<Either<HelperResponse, GetDataUserModel>> call(LoginModel loginModel);

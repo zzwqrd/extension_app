@@ -11,7 +11,8 @@ extension AppFormFieldExtension on BuildContext {
       return "This field is required".tr();
     }
     final emailRegex = RegExp(
-        r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
+      r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$",
+    );
     if (!emailRegex.hasMatch(value)) {
       return "Please enter a valid email address".tr();
     }
@@ -37,8 +38,9 @@ extension AppFormFieldExtension on BuildContext {
     if (value == null || value.isEmpty) {
       return "This field is required".tr();
     }
-    final phoneRegex =
-        RegExp(r"^\+?[1-9]\d{9,14}$"); // E.164 international phone format
+    final phoneRegex = RegExp(
+      r"^\+?[1-9]\d{9,14}$",
+    ); // E.164 international phone format
     if (!phoneRegex.hasMatch(value)) {
       return "Please enter a valid phone number".tr();
     }
@@ -210,7 +212,8 @@ extension StringValidation on String {
   // Method to validate if a string is a valid email
   bool isValidEmail() {
     final emailRegex = RegExp(
-        r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
+      r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$",
+    );
     return emailRegex.hasMatch(this);
   }
 }

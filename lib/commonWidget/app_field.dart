@@ -1,9 +1,9 @@
+import 'package:connectivity_plus/connectivity_plus.dart'; // Added connectivity_plus package
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:connectivity_plus/connectivity_plus.dart'; // Added connectivity_plus package
 
 import '../core/utils/app_styles.dart';
 import '../core/utils/extensions.dart';
@@ -12,7 +12,6 @@ import '../core/utils/input_decoration_extensions.dart';
 import '../gen/locale_keys.g.dart';
 import 'loading.dart';
 
-
 Future<bool> checkInternetConnectivity() async {
   var connectivityResult = await (Connectivity().checkConnectivity());
   if (connectivityResult == ConnectivityResult.none) {
@@ -20,7 +19,6 @@ Future<bool> checkInternetConnectivity() async {
   }
   return true;
 }
-
 
 class AppCustomForm extends StatefulWidget {
   final String? hintText, title;
@@ -240,7 +238,8 @@ class AppCustomForm extends StatefulWidget {
       hintText: hintText,
       controller: controller,
       keyboardType: FieldType.text.keyboardType,
-      validator: validator ??
+      validator:
+          validator ??
           (v) {
             if (isRequired && v?.isEmpty == true) {
               return "This field is required".tr();
@@ -290,8 +289,10 @@ class _AppCustomFormState extends State<AppCustomForm> {
           keyboardType: widget.keyboardType,
           validator: widget.validator,
           inputFormatters: [
-            if ([TextInputType.phone, TextInputType.number]
-                .contains(widget.keyboardType))
+            if ([
+              TextInputType.phone,
+              TextInputType.number,
+            ].contains(widget.keyboardType))
               FilteringTextInputFormatter.digitsOnly,
           ],
           style: AppStyles.smallText.copyWith(fontSize: 15),
@@ -379,12 +380,12 @@ class RegistrationScreen extends StatelessWidget {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
 
+  RegistrationScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Registration"),
-      ),
+      appBar: AppBar(title: Text("Registration")),
       body: FutureBuilder<bool>(
         future: checkInternetConnectivity(),
         builder: (context, snapshot) {
@@ -458,7 +459,7 @@ class RegistrationScreen extends StatelessWidget {
               ],
             ),
           );
-        }
+        },
       ),
     );
   }
@@ -467,15 +468,19 @@ class RegistrationScreen extends StatelessWidget {
   Future<bool> _validateFields(BuildContext context) async {
     final hasInternet = await checkInternetConnectivity();
     if (!hasInternet) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('No internet connection')));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('No internet connection')));
       return false;
     }
     final emailValid = _emailController.text.validateEmail() == null;
     final passwordValid =
         _passwordController.text.validatePassword(_passwordController.text) ==
-            null;
-    final confirmPasswordValid = _confirmPasswordController.text
-            .validatePassword(_passwordController.text) ==
+        null;
+    final confirmPasswordValid =
+        _confirmPasswordController.text.validatePassword(
+          _passwordController.text,
+        ) ==
         null;
     final phoneValid = _phoneController.text.validatePhone() == null;
 
