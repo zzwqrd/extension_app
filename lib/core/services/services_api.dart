@@ -9,8 +9,10 @@ mixin ServicesApi {
   final DioServices _dio = DioServices.instance;
 
   /// -----------------------------
+  ///
   /// 🟩 POST Request
   /// -----------------------------
+
   Future<Either<HelperResponse, T>> postRequest<T>(
     String path, {
     dynamic data,
@@ -19,49 +21,76 @@ mixin ServicesApi {
     Map<String, String>? headers,
     bool requireAuth = true,
     bool isFormData = false,
-    T Function(dynamic json)? fromJson, // للتحويل الفردي
-    T Function(List json)? fromJsonList, // للتحويل لقائمة
+    T Function(dynamic json)? fromJson,
   }) async {
-    try {
-      final response = await _dio.post(
-        path,
-        data: data,
-        formData: formData,
-        queryParameters: queryParameters,
-        headers: headers,
-        requireAuth: requireAuth,
-        isFormData: isFormData,
-      );
+    final helperResponse = await _dio.post(
+      path,
+      data: data,
+      formData: formData,
+      queryParameters: queryParameters,
+      headers: headers,
+      requireAuth: requireAuth,
+      isFormData: isFormData,
+    );
 
-      if (response.statusCode == 200 &&
-          response.isSuccess &&
-          response.data != null) {
-        final resData = response.data;
-
-        // لو دالة fromJson موجودة
-        if (fromJson != null) return Right(fromJson(resData));
-
-        // لو دالة fromJsonList موجودة
-        if (fromJsonList != null && resData is List) {
-          return Right(fromJsonList(resData));
-        }
-
-        // لو T نفسه Map أو List مش محتاج fromJson
-        if (resData is T) return Right(resData);
-
-        // أي حالة تانية نرجع خطأ
-        return Left(
-          HelperResponse.badRequest(
-            message: 'fromJson parser is required for type $T',
-          ),
-        );
-      } else {
-        return Left(response);
-      }
-    } catch (e) {
-      return Left(HelperResponse.badRequest(message: e.toString()));
+    // التحقق من النجاح بناءً على status code أو logic إضافي
+    if (helperResponse.success == true && helperResponse.statusCode == 200) {
+      return Right(fromJson!(helperResponse.data));
+    } else {
+      return Left(helperResponse);
     }
   }
+  // Future<Either<HelperResponse, T>> postRequest<T>(
+  //   String path, {
+  //   dynamic data,
+  //   Map<String, dynamic>? formData,
+  //   Map<String, dynamic>? queryParameters,
+  //   Map<String, String>? headers,
+  //   bool requireAuth = true,
+  //   bool isFormData = false,
+  //   T Function(dynamic json)? fromJson, // للتحويل الفردي
+  //   T Function(List json)? fromJsonList, // للتحويل لقائمة
+  // }) async {
+  //   try {
+  //     final response = await _dio.post(
+  //       path,
+  //       data: data,
+  //       formData: formData,
+  //       queryParameters: queryParameters,
+  //       headers: headers,
+  //       requireAuth: requireAuth,
+  //       isFormData: isFormData,
+  //     );
+
+  //     if (response.statusCode == 200 &&
+  //         response.isSuccess &&
+  //         response.data != null) {
+  //       final resData = response.data;
+
+  //       // لو دالة fromJson موجودة
+  //       if (fromJson != null) return Right(fromJson(resData));
+
+  //       // لو دالة fromJsonList موجودة
+  //       if (fromJsonList != null && resData is List) {
+  //         return Right(fromJsonList(resData));
+  //       }
+
+  //       // لو T نفسه Map أو List مش محتاج fromJson
+  //       if (resData is T) return Right(resData);
+
+  //       // أي حالة تانية نرجع خطأ
+  //       return Left(
+  //         HelperResponse.badRequest(
+  //           message: 'fromJson parser is required for type $T',
+  //         ),
+  //       );
+  //     } else {
+  //       return Left(response);
+  //     }
+  //   } catch (e) {
+  //     return Left(HelperResponse.badRequest(message: e.toString()));
+  //   }
+  // }
 
   /// -----------------------------
   /// 🟦 GET Request

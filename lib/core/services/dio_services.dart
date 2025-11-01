@@ -113,6 +113,10 @@ class DioServices {
       receiveTimeout: const Duration(seconds: 30),
       sendTimeout: const Duration(seconds: 30),
       responseType: ResponseType.json,
+      // هذا للتعامل مع جميع حالات الاستجابة كاستجابات صالحة
+      validateStatus: (status) {
+        return status != null && status >= 100 && status <= 599;
+      },
       headers: {
         if (UserModel.instance.isAuth)
           "Authorization": "Bearer ${UserModel.instance.data?.access?.token}",
