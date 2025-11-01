@@ -15,7 +15,7 @@ class LoginCubit extends Cubit<LoginState> {
 
   LoginModel loginModel = LoginModel(
     email: "user@alicom.com".trim(),
-    password: "secretg".trim(),
+    password: "secret".trim(),
   );
 
   Future<void> login() async {

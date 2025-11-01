@@ -58,10 +58,10 @@ class LoginDataSourceImpl with ServicesApi {
   //الداله ليست لها استخدام فقط لتوضيح جلب البينات من api في حالت الليست
   @visibleForTesting
   Future<Either<HelperResponse, GetDataUserModel>> getUserData() async {
-    return await getRequest<GetDataUserModel>(
+    return await getRequest(
       AppConstants.home,
       requireAuth: true,
-      fromJsonList: (json) => json
+      fromJson: (json) => json
           .map<GetDataUserModel>((e) => GetDataUserModel.fromJson(e))
           .toList(),
     );
