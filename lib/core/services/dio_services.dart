@@ -207,9 +207,18 @@ class DioServices {
         return handler.next(options);
       },
       onResponse: (response, handler) {
-        _logger.green(
-          '✅ Response [${response.statusCode}] ${response.requestOptions.uri}',
-        );
+        if (response.statusCode != 200 && response.statusCode != 201) {
+          _logger.red(
+            '❌ Response [${response.statusCode}] ${response.requestOptions.uri}',
+          );
+          _logger.red('Data: ${_formatResponseData(response.data)}');
+          return handler.next(response);
+        } else {
+          _logger.green(
+            '✅ Response [${response.statusCode}] ${response.requestOptions.uri}',
+          );
+        }
+
         _logger.green('Data: ${_formatResponseData(response.data)}');
         return handler.next(response);
       },

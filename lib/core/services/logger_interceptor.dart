@@ -5,7 +5,9 @@ import 'logger.dart';
 /// Logging interceptor (unchanged from your original)
 class LoggingInterceptor extends Interceptor {
   final _logger = LoggerDebug(
-      headColor: LogColors.red, constTitle: "DioHelper Gate Logger");
+    headColor: LogColors.red,
+    constTitle: "DioHelper Gate Logger",
+  );
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
@@ -18,11 +20,20 @@ class LoggingInterceptor extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    _logger.green(
-        "⬅️ Response [${response.statusCode}] => Path: ${response.requestOptions.path}");
+    if (response.statusCode != 200 && response.statusCode != 201) {
+      _logger.red(
+        "⚠️ Warning: Received status code ${response.statusCode} for Path: ${response.requestOptions.path}",
+      );
+      _logger.red("Data: ${response.data}");
+      return handler.next(response);
+    } else {
+      _logger.green(
+        "⬅️ Response [${response.statusCode}] => Path: ${response.requestOptions.path}",
+      );
 
-    _logger.green("Data: ${response.data}");
-    return handler.next(response);
+      _logger.green("Data: ${response.data}");
+      return handler.next(response);
+    }
   }
 
   @override
