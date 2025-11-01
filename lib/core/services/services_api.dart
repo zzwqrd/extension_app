@@ -92,8 +92,9 @@ mixin ServicesApi {
         final resData = response.data;
 
         if (fromJson != null) return Right(fromJson(resData));
-        if (fromJsonList != null && resData is List)
+        if (fromJsonList != null && resData is List) {
           return Right(fromJsonList(resData) as T);
+        }
         if (resData is T) return Right(resData);
 
         return Left(
@@ -136,8 +137,9 @@ mixin ServicesApi {
         final resData = response.data;
 
         if (fromJson != null) return Right(fromJson(resData));
-        if (fromJsonList != null && resData is List)
+        if (fromJsonList != null && resData is List) {
           return Right(fromJsonList(resData) as T);
+        }
         if (resData is T) return Right(resData);
 
         return Left(
@@ -178,8 +180,9 @@ mixin ServicesApi {
         final resData = response.data;
 
         if (fromJson != null) return Right(fromJson(resData));
-        if (fromJsonList != null && resData is List)
+        if (fromJsonList != null && resData is List) {
           return Right(fromJsonList(resData) as T);
+        }
         if (resData is T) return Right(resData);
 
         return Left(
