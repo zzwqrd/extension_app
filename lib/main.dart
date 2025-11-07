@@ -23,11 +23,11 @@ late SharedPreferences preferences;
 
 /// 🚀 Application entry point
 Future<void> main() async {
-  /// Attach global Bloc observer for debugging Cubit/BLoC transitions
-  Bloc.observer = AppBlocObserver();
-
   await runZonedGuarded<Future<void>>(() async {
     WidgetsFlutterBinding.ensureInitialized();
+
+    /// Attach global Bloc observer for debugging Cubit/BLoC transitions
+    Bloc.observer = AppBlocObserver();
 
     _logStartupMessage();
 
