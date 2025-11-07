@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-import '../../../../main.dart';
+import '../../app.dart';
 
 class UserModel extends Equatable {
   // Private constructor for singleton
