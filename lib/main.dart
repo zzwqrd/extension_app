@@ -23,12 +23,12 @@ late SharedPreferences preferences;
 
 /// 🚀 Application entry point
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
   /// Attach global Bloc observer for debugging Cubit/BLoC transitions
   Bloc.observer = AppBlocObserver();
 
   await runZonedGuarded<Future<void>>(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+
     _logStartupMessage();
 
     /// Allow self-signed certificates (if required)
@@ -99,8 +99,8 @@ Future<void> _preLaunchConfigurations() async {
 
     /// 💾 Load any saved settings from preferences
     Future.microtask(() async {
-      final savedLang = preferences.getString('lang');
-      logger.blue('🌍 Loaded language: ${savedLang ?? 'default (ar)'}');
+      // final savedLang = preferences.getString('lang');
+      // logger.blue('🌍 Loaded language: ${savedLang ?? 'default (ar)'}');
     }),
 
     /// 🔮 Placeholder for optional services (e.g. remote config / analytics)
