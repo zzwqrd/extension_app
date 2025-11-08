@@ -5,6 +5,55 @@ import '../../../../../core/services/helper_respons.dart';
 import '../models/graphql_queries.dart';
 import '../models/login_model.dart';
 
+class LoginDataSourceImpl with ApiClient {
+  final GraphQLQueries queries = GraphQLQueries();
+
+  /// 🔐 تسجيل الدخول باستخدام GraphQL
+  Future<Either<HelperResponse, LoginResponse>> login(
+    LoginModel loginModel,
+  ) async {
+    return await graphQLMutation<LoginResponse>(
+      queries.loginMutation,
+      variables: {'email': loginModel.email, 'password': loginModel.password},
+      requireAuth: false,
+      fromJson: (json) {
+        return LoginResponse.fromJson(json);
+      },
+      dataKey: 'generateCustomerToken',
+    );
+  }
+
+  /// 👤 جلب بيانات المستخدم بعد التسجيل
+  Future<Either<HelperResponse, Customer>> getCustomerData() async {
+    return await graphQLQuery<Customer>(
+      queries.customerQuery,
+      requireAuth: true, // يحتاج توكن
+      fromJson: (json) {
+        return Customer.fromJson(json);
+      },
+      dataKey: 'customer',
+    );
+  }
+
+  /// 🔄 عملية تسجيل الدخول الكاملة (الحصول على التوكن + بيانات المستخدم)
+  Future<Either<HelperResponse, Map<String, dynamic>>> completeLogin(
+    LoginModel loginModel,
+  ) async {
+    // ١. تسجيل الدخول والحصول على التوكن
+    final loginResult = await login(loginModel);
+
+    return loginResult.fold((error) => Left(error), (loginResponse) async {
+      // ٢. جلب بيانات المستخدم باستخدام التوكن
+      final customerResult = await getCustomerData();
+
+      return customerResult.fold((error) => Left(error), (customer) {
+        // ٣. إرجاع كل البيانات معاً
+        return Right({'token': loginResponse.token, 'customer': customer});
+      });
+    });
+  }
+}
+
 /// 🚀 DataSource الخاص بعملية تسجيل الدخول
 /// before refactor using ServicesApi mixin
 // class LoginDataSourceImpl {
@@ -65,52 +114,3 @@ import '../models/login_model.dart';
 //     );
 //   }
 // }
-
-class LoginDataSourceImpl with ApiClient {
-  final GraphQLQueries queries = GraphQLQueries();
-
-  /// 🔐 تسجيل الدخول باستخدام GraphQL
-  Future<Either<HelperResponse, LoginResponse>> login(
-    LoginModel loginModel,
-  ) async {
-    return await graphQLMutation<LoginResponse>(
-      queries.loginMutation,
-      variables: {'email': loginModel.email, 'password': loginModel.password},
-      requireAuth: false,
-      fromJson: (json) {
-        return LoginResponse.fromJson(json);
-      },
-      dataKey: 'generateCustomerToken',
-    );
-  }
-
-  /// 👤 جلب بيانات المستخدم بعد التسجيل
-  Future<Either<HelperResponse, Customer>> getCustomerData() async {
-    return await graphQLQuery<Customer>(
-      queries.customerQuery,
-      requireAuth: true, // يحتاج توكن
-      fromJson: (json) {
-        return Customer.fromJson(json);
-      },
-      dataKey: 'customer',
-    );
-  }
-
-  /// 🔄 عملية تسجيل الدخول الكاملة (الحصول على التوكن + بيانات المستخدم)
-  Future<Either<HelperResponse, Map<String, dynamic>>> completeLogin(
-    LoginModel loginModel,
-  ) async {
-    // ١. تسجيل الدخول والحصول على التوكن
-    final loginResult = await login(loginModel);
-
-    return loginResult.fold((error) => Left(error), (loginResponse) async {
-      // ٢. جلب بيانات المستخدم باستخدام التوكن
-      final customerResult = await getCustomerData();
-
-      return customerResult.fold((error) => Left(error), (customer) {
-        // ٣. إرجاع كل البيانات معاً
-        return Right({'token': loginResponse.token, 'customer': customer});
-      });
-    });
-  }
-}
