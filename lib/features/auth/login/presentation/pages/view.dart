@@ -7,8 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../commonWidget/app_field.dart';
-import '../../../../../commonWidget/button_animation/LoadingButton.dart'
-    show LoadingButton;
+import '../../../../../commonWidget/button_animation/LoadingButton.dart';
 import '../../../../../di/service_locator.dart';
 import '../../../../../gen/locale_keys.g.dart';
 import '../manager/controller.dart';
@@ -20,55 +19,67 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = sl<LoginCubit>();
+    // final c = sl<CategoryCubit>();
     return Scaffold(
-      body: Form(
-        key: bloc.formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          // mainAxisSize: MainAxisSize.max,
-          children: [
-            // before:
-            // Image.asset(MyAssets.images.logo.path, width: 150.w).pb8,
-            // after:
-            MyAssets.icons.logo.svg(width: 150.w).pb8,
+      body: SingleChildScrollView(
+        child: Form(
+          key: bloc.formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            // mainAxisSize: MainAxisSize.max,
+            children: [
+              // before:
+              // Image.asset(MyAssets.images.logo.path, width: 150.w).pb8,
+              // after:
+              MyAssets.icons.logo.svg(width: 150.w).pb8,
 
-            // before:
-            // Flexible(child: Center(child: Text('Login View'))),
-            // after:
-            "welcome back".h3.center.pb3,
-            // before:
-            // TextField(
-            //   decoration: InputDecoration(
-            //     hintText: tr(LocaleKeys.auth_email_placeholder),
-            //   ),
-            //   controller: TextEditingController(text: bloc.loginModel.email),
-            // ).pb3,
-            // after:
-            AppCustomForm.email(
-              hintText: tr(LocaleKeys.auth_email_placeholder),
-              controller: TextEditingController(text: bloc.loginModel.email),
-            ).pb3,
+              // before:
+              // Flexible(child: Center(child: Text('Login View'))),
+              // after:
+              "welcome back".h3.center.pb3,
+              // ...?state.data?.items?.expand(
+              //   (category) =>
+              //       category.children?.map(
+              //         (subCategory) =>
+              //             subCategory.name.toString().h4.center.pb5,
+              //       ) ??
+              //       [],
+              // ),
+              // TextField(
+              //   decoration: InputDecoration(
+              //     hintText: tr(LocaleKeys.auth_email_placeholder),
+              //   ),
+              //   controller: TextEditingController(text: bloc.loginModel.email),
+              // ).pb3,
+              // after:
+              AppCustomForm.email(
+                hintText: tr(LocaleKeys.auth_email_placeholder),
+                controller: TextEditingController(text: bloc.loginModel.email),
+              ).pb3,
 
-            AppCustomForm.password(
-              hintText: tr(LocaleKeys.auth_password_placeholder),
-              controller: TextEditingController(text: bloc.loginModel.password),
-            ).pb6,
+              AppCustomForm.password(
+                hintText: tr(LocaleKeys.auth_password_placeholder),
+                controller: TextEditingController(
+                  text: bloc.loginModel.password,
+                ),
+              ).pb6,
 
-            BlocBuilder<LoginCubit, LoginState>(
-              bloc: bloc,
-              builder: (context, state) {
-                return LoadingButton(
-                  isAnimating: state.requestState.isLoading,
-                  title: tr(LocaleKeys.auth_title),
-                  onTap: () {
-                    bloc.login();
-                  },
-                );
-              },
-            ),
-          ],
-        ).center.pb8.px4,
+              BlocBuilder<LoginCubit, LoginState>(
+                bloc: bloc,
+                builder: (context, state) {
+                  return LoadingButton(
+                    isAnimating: state.requestState.isLoading,
+                    title: tr(LocaleKeys.auth_title),
+                    onTap: () {
+                      bloc.login();
+                    },
+                  );
+                },
+              ),
+            ],
+          ).center.pb8.px4,
+        ),
       ),
     );
   }

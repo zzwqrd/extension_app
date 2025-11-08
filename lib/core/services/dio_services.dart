@@ -118,12 +118,36 @@ class DioServices {
         return status != null && status >= 100 && status <= 599;
       },
       headers: {
-        if (UserModel.instance.isAuth)
-          "Authorization": "Bearer ${UserModel.instance.data?.access?.token}",
+        "authorization":
+            "Bearer eyJraWQiOiIxIiwiYWxnIjoiSFMyNTYifQ.eyJ1aWQiOjQ5MCwidXR5cGlkIjozLCJpYXQiOjE3NjI2MzE2MzAsImV4cCI6MTc2MjYzNTIzMH0.UiKcOVJ6hQdM8qUKTcvPgpEQEfDCpT8bsi4FqUv_vxw",
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        "Accept-Language": navigatorKey.currentContext?.locale.languageCode,
-        "x-localization": navigatorKey.currentContext?.locale.languageCode,
+        'Accept-Encoding': 'gzip, deflate, br, zstd',
+        'Accept-Language': 'en-US,en;q=0.9,ar;q=0.8',
+        'User-Agent':
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36',
+        'Origin': 'https://clauem2.arrowtheme.com',
+        'Referer': 'https://clauem2.arrowtheme.com/at',
+        'Sec-Ch-Ua':
+            '"Google Chrome";v="141", "Not?A_Brand";v="8", "Chromium";v="141"',
+        'Sec-Ch-Ua-Mobile': '?0',
+        'Sec-Ch-Ua-Platform': '"macOS"',
+        'Sec-Fetch-Dest': 'empty',
+        'Sec-Fetch-Mode': 'cors',
+        'Sec-Fetch-Site': 'same-origin',
+        'Priority': 'u=1, i',
+
+        // 'Content-Type': 'application/json',
+        // 'Accept': 'application/json',
+        // 'Accept-Language': 'ar',
+        // 'x-localization': 'ar',
+        // 'Origin': 'https://clauem2.arrowtheme.com',
+        // if (UserModel.instance.isAuth)
+        // "Authorization": "Bearer ${UserModel.instance.data?.access?.token}",
+        // 'Content-Type': 'application/json',
+        // 'Accept': 'application/json',
+        // "Accept-Language": navigatorKey.currentContext?.locale.languageCode,
+        // "x-localization": navigatorKey.currentContext?.locale.languageCode,
       }..removeWhere((key, value) => value == null || '$value'.isEmpty),
     );
 

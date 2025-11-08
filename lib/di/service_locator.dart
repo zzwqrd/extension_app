@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 
 import '../features/auth/login/presentation/manager/controller.dart'
-    show LoginCubit;
+    show LoginCubit, CategoryCubit;
 import '../features/splash/presentation/controller/controller.dart';
 
 final GetIt sl = GetIt.instance;
@@ -12,4 +12,5 @@ Future<void> initGitIt() async {
   }
 
   sl.registerFactory<LoginCubit>(() => LoginCubit());
+  sl.registerFactory<CategoryCubit>(() => CategoryCubit());
 }

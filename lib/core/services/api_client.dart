@@ -100,7 +100,7 @@ mixin ApiClient {
     };
 
     final response = await _dio.post(
-      '/graphql', // GraphQL endpoint
+      '/graphql',
       data: graphQLData,
       headers: {'Content-Type': 'application/json', ...?headers},
       requireAuth: requireAuth,

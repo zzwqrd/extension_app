@@ -1,5 +1,5 @@
 class AppConstants {
-  static const baseUrl = "https://alicom.razinsoft.com";
+  static const baseUrl = "https://clauem2.arrowtheme.com";
 
   static const login = "$baseUrl/api/login";
   static const register = "$baseUrl/api/register";
