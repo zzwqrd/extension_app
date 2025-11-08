@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 
 import '../../../../../core/services/api_client.dart';
 import '../../../../../core/services/helper_respons.dart';
+import '../models/graphql_queries.dart';
 import '../models/login_model.dart';
 
 /// 🚀 DataSource الخاص بعملية تسجيل الدخول
@@ -66,20 +67,14 @@ import '../models/login_model.dart';
 // }
 
 class LoginDataSourceImpl with ApiClient {
+  final GraphQLQueries queries = GraphQLQueries();
+
   /// 🔐 تسجيل الدخول باستخدام GraphQL
   Future<Either<HelperResponse, LoginResponse>> login(
     LoginModel loginModel,
   ) async {
-    const String mutation = '''
-    mutation GenerateCustomerToken(\$email: String!, \$password: String!) {
-      generateCustomerToken(email: \$email, password: \$password) {
-        token
-      }
-    }
-    ''';
-
     return await graphQLMutation<LoginResponse>(
-      mutation,
+      queries.loginMutation,
       variables: {'email': loginModel.email, 'password': loginModel.password},
       requireAuth: false,
       fromJson: (json) {
@@ -91,35 +86,8 @@ class LoginDataSourceImpl with ApiClient {
 
   /// 👤 جلب بيانات المستخدم بعد التسجيل
   Future<Either<HelperResponse, Customer>> getCustomerData() async {
-    const String query = '''
-    query GetCustomer {
-      customer {
-        id
-        firstname
-        lastname
-        email
-        date_of_birth
-        gender
-        is_subscribed
-        addresses {
-          firstname
-          lastname
-          street
-          city
-          region {
-            region_code
-            region
-          }
-          postcode
-          country_code
-          telephone
-        }
-      }
-    }
-    ''';
-
     return await graphQLQuery<Customer>(
-      query,
+      queries.customerQuery,
       requireAuth: true, // يحتاج توكن
       fromJson: (json) {
         return Customer.fromJson(json);
