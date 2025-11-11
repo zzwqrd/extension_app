@@ -9,6 +9,7 @@ import 'package:internet_connection_checker_plus/internet_connection_checker_plu
 import '../../core/routes/app_routes_fun.dart';
 import '../../core/routes/routes.dart';
 import '../../core/utils/constant.dart';
+import '../../main.dart';
 import '../utils/flash_helper.dart';
 import 'helper_respons.dart';
 import 'logger.dart';
@@ -118,8 +119,7 @@ class DioServices {
         return status != null && status >= 100 && status <= 599;
       },
       headers: {
-        "authorization":
-            "Bearer eyJraWQiOiIxIiwiYWxnIjoiSFMyNTYifQ.eyJ1aWQiOjQ5MCwidXR5cGlkIjozLCJpYXQiOjE3NjI2MzE2MzAsImV4cCI6MTc2MjYzNTIzMH0.UiKcOVJ6hQdM8qUKTcvPgpEQEfDCpT8bsi4FqUv_vxw",
+        "authorization": "Bearer ${preferences.getString('auth_token') ?? ''}",
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Origin': 'https://clauem2.arrowtheme.com',
@@ -631,10 +631,11 @@ class DioServices {
           message: _extractErrorMessage(response.data),
         );
       } else if (response.statusCode == 401) {
-        pushAndRemoveUntil(NamedRoutes.i.login);
-        return HelperResponse<T>.unauthorized(
-          message: 'session_expired_please_login_again'.tr(),
-        );
+        final errorMessage =
+            (response.data['errors'] as List?)?.firstOrNull?['message'] ??
+            'session_expired_please_login_again'.tr();
+        // pushAndRemoveUntil(NamedRoutes.i.login);
+        return HelperResponse<T>.unauthorized(message: errorMessage);
       } else if (response.statusCode == 403) {
         return HelperResponse<T>.forbidden(message: 'access_denied'.tr());
       } else if (response.statusCode == 404) {

@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 
 import '../../../../../core/services/api_client.dart';
 import '../../../../../core/services/helper_respons.dart';
+import '../../../../../main.dart';
 import '../models/graphql_queries.dart';
 import '../models/login_model.dart';
 
@@ -43,12 +44,16 @@ class LoginDataSourceImpl with ApiClient {
     final loginResult = await login(loginModel);
 
     return loginResult.fold((error) => Left(error), (loginResponse) async {
+      preferences.setString('auth_token', loginResponse.token);
       // ٢. جلب بيانات المستخدم باستخدام التوكن
       final customerResult = await getCustomerData();
 
       return customerResult.fold((error) => Left(error), (customer) {
         // ٣. إرجاع كل البيانات معاً
-        return Right({'token': loginResponse.token, 'customer': customer});
+        return Right({
+          'token': preferences.getString('auth_token'),
+          'customer': customer,
+        });
       });
     });
   }
