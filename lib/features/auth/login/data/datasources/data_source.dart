@@ -13,13 +13,14 @@ class LoginDataSourceImpl with ApiClient {
   Future<Either<HelperResponse, LoginResponse>> login(
     LoginModel loginModel,
   ) async {
-    return await graphQLMutation<LoginResponse>(
+    return await graphQLMutation(
       queries.loginMutation,
       variables: {'email': loginModel.email, 'password': loginModel.password},
       requireAuth: false,
       fromJson: (json) {
         return LoginResponse.fromJson(json);
       },
+
       dataKey: 'generateCustomerToken',
     );
   }
@@ -40,6 +41,12 @@ class LoginDataSourceImpl with ApiClient {
   Future<Either<HelperResponse, Map<String, dynamic>>> completeLogin(
     LoginModel loginModel,
   ) async {
+    // if (preferences.containsKey('auth_token')) {
+    //   preferences.remove('auth_token');
+    // }
+    // if (preferences.getString('auth_token') != null) {
+    //   preferences.clear();
+    // }
     // ١. تسجيل الدخول والحصول على التوكن
     final loginResult = await login(loginModel);
 
@@ -51,6 +58,7 @@ class LoginDataSourceImpl with ApiClient {
       return customerResult.fold((error) => Left(error), (customer) {
         // ٣. إرجاع كل البيانات معاً
         return Right({
+          'loginResponse': loginResponse,
           'token': preferences.getString('auth_token'),
           'customer': customer,
         });
